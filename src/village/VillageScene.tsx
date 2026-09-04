@@ -51,7 +51,7 @@ function SceneEnvironment() {
   return null;
 }
 
-export default function VillageScene() {
+export default function VillageScene({ active = true }: { active?: boolean }) {
   const quality = useStore((s) => s.quality);
   const reduced = useStore((s) => s.reducedMotion);
   const setVillageReady = useStore((s) => s.setVillageReady);
@@ -67,7 +67,7 @@ export default function VillageScene() {
 
   // Stop rendering entirely when the tab is hidden or the village is off-screen.
   const frameloop: 'always' | 'never' | 'demand' =
-    !visible || mode === 'hidden' ? 'never' : reduced ? 'demand' : 'always';
+    !active || !visible || mode === 'hidden' ? 'never' : reduced ? 'demand' : 'always';
 
   return (
     <Canvas

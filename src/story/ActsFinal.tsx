@@ -6,7 +6,7 @@ import { StoryNav } from '../components/Chrome';
 import { WorldCallouts, type CalloutItem } from '../components/Callouts';
 import { NumberFlow, Note, SeriesPill, StatCard } from '../components/bits';
 import { anchors } from '../village/layout';
-import { usePrefersReducedMotion } from '../lib/hooks';
+import { useIsMobile, usePrefersReducedMotion } from '../lib/hooks';
 import { useStore } from '../state/store';
 import { useSceneFlags } from './hooks';
 
@@ -151,6 +151,7 @@ export function ActAha() {
 /* --- ACT 11 — WHY 7.8%? --------------------------------------------------- */
 
 export function ActNominalVsReal() {
+  const mobile = useIsMobile();
   const setMode = useStore((s) => s.setMode);
   const setPose = useStore((s) => s.setPose);
   const set3dFlags = useStore((s) => s.set3dFlags);
@@ -159,9 +160,8 @@ export function ActNominalVsReal() {
   useEffect(() => {
     return () => {
       set3dFlags({ flowsOn: false });
-      setMode('ambient');
     };
-  }, [set3dFlags, setMode]);
+  }, [set3dFlags]);
 
   const goToFactory = () => {
     setAtFactory(true);
@@ -219,39 +219,40 @@ export function ActNominalVsReal() {
         subtract, and it does not correspond to CPI or WPI.
       </Note>
 
-      {!atFactory ? (
-        <button type="button" className="btn btn-ghost" onClick={goToFactory}>
-          For the curious: see this at the factory →
-        </button>
-      ) : (
-        <>
-          <h2>Output and inputs are separate things</h2>
-          <p>
-            In the village, watch the factory. Timber goes in. Furniture comes out. Those two
-            streams have their own prices, and those prices do not have to move together.
-          </p>
-          <p>
-            That is why deflating output and inputs with their own price indices — double
-            deflation — can give a different measure of real value added than deflating the
-            value added with one index. India's 2022–23 series adopted double deflation, and
-            it is one of the reasons real growth in the new series is not a simple
-            re-scaling of the old one. Worked example in{' '}
-            <a href="#/what-changed">what changed</a>.
-          </p>
-          <button type="button" className="btn btn-ghost btn-sm" onClick={backToNumbers}>
-            ← Back to the numbers
+      {!mobile &&
+        (!atFactory ? (
+          <button type="button" className="btn btn-ghost" onClick={goToFactory}>
+            For the curious: see this at the factory →
           </button>
-          <WorldCallouts
-            items={
-              [
-                { id: 'ff-in', position: [18, 0, 25], label: 'Inputs in — timber', emoji: '🪵', tone: 'clay', offsetY: 6 },
-                { id: 'ff-out', position: [28, 0, 2], label: 'Output out — furniture', emoji: '🪑', tone: 'teal', offsetY: 6 },
-                { id: 'ff-plant', position: anchors.factory, label: 'Value added = output − inputs', emoji: '🏭', offsetY: 14, keepOnMobile: true },
-              ] satisfies CalloutItem[]
-            }
-          />
-        </>
-      )}
+        ) : (
+          <>
+            <h2>Output and inputs are separate things</h2>
+            <p>
+              In the village, watch the factory. Timber goes in. Furniture comes out. Those two
+              streams have their own prices, and those prices do not have to move together.
+            </p>
+            <p>
+              That is why deflating output and inputs with their own price indices — double
+              deflation — can give a different measure of real value added than deflating the
+              value added with one index. India's 2022–23 series adopted double deflation, and
+              it is one of the reasons real growth in the new series is not a simple
+              re-scaling of the old one. Worked example in{' '}
+              <a href="#/what-changed">what changed</a>.
+            </p>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={backToNumbers}>
+              ← Back to the numbers
+            </button>
+            <WorldCallouts
+              items={
+                [
+                  { id: 'ff-in', position: [18, 0, 25], label: 'Inputs in — timber', emoji: '🪵', tone: 'clay', offsetY: 6 },
+                  { id: 'ff-out', position: [28, 0, 2], label: 'Output out — furniture', emoji: '🪑', tone: 'teal', offsetY: 6 },
+                  { id: 'ff-plant', position: anchors.factory, label: 'Value added = output − inputs', emoji: '🏭', offsetY: 14, keepOnMobile: true },
+                ] satisfies CalloutItem[]
+              }
+            />
+          </>
+        ))}
 
       <StoryNav />
     </article>
@@ -270,7 +271,8 @@ const CYCLE = [
 ];
 
 export function ActForever() {
-  useSceneFlags({ futureOn: true });
+  const mobile = useIsMobile();
+  useSceneFlags({ futureOn: !mobile });
 
   return (
     <article>
@@ -279,11 +281,19 @@ export function ActForever() {
       <h2 className="big-statement" style={{ color: 'var(--clay)', marginTop: 0 }}>
         No.
       </h2>
-      <p>
-        Look at the village again. Those faint outlines are activities that do not exist yet
-        — whatever the equivalent of "delivery riders" turns out to be in 2035. The 2022–23
-        picture describes the village as it is now, which means it starts ageing immediately.
-      </p>
+      {mobile ? (
+        <p>
+          New activities will emerge — whatever the equivalent of "delivery riders" turns
+          out to be in 2035. The 2022–23 picture describes the economy as it is now, which
+          means it starts ageing immediately.
+        </p>
+      ) : (
+        <p>
+          Look at the village again. Those faint outlines are activities that do not exist yet
+          — whatever the equivalent of "delivery riders" turns out to be in 2035. The 2022–23
+          picture describes the village as it is now, which means it starts ageing immediately.
+        </p>
+      )}
 
       <ol className="cycle">
         {CYCLE.map((item, i) => (
@@ -303,9 +313,11 @@ export function ActForever() {
         documented, explained and checkable.
       </p>
 
-      <WorldCallouts
-        items={[{ id: 'fut', position: anchors.centre, label: 'Whatever comes next', emoji: '❓', offsetY: 26, keepOnMobile: true }]}
-      />
+      {!mobile && (
+        <WorldCallouts
+          items={[{ id: 'fut', position: anchors.centre, label: 'Whatever comes next', emoji: '❓', offsetY: 26 }]}
+        />
+      )}
       <StoryNav />
     </article>
   );

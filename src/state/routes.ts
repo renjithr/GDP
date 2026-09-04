@@ -54,6 +54,8 @@ export type RouteDef = {
   /** Village year this section wants. Omitted means "leave the year where it is". */
   year?: number;
   pose?: CameraPoseId;
+  /** On phones, replace the village split-view with a full-height story page. */
+  mobileFullscreen?: boolean;
   /** Utility pages sit outside the linear walkthrough. */
   utility?: boolean;
 };
@@ -83,12 +85,12 @@ export const routes: RouteDef[] = [
   { id: 'mistake', path: '/mistake', step: 6, title: 'There Was a Mistake', mode: 'stage', year: 2026, pose: 'carpenter' },
   { id: 'base-year', path: '/base-year', step: 7, title: 'The Base-Year Experience', mode: 'stage', year: 2026, pose: 'analytical' },
   { id: 'what-changed', path: '/what-changed', step: 7, title: 'What Changed in the New Series', mode: 'stage', year: 2026, pose: 'overview' },
-  { id: 'revisions', path: '/revisions', step: 8, title: 'Same Quarter, Updated Estimate', mode: 'ambient', year: 2026 },
-  { id: 'aha', path: '/aha', step: 8, title: 'Revisiting 2.6%', mode: 'ambient' },
-  { id: 'nominal-vs-real', path: '/nominal-vs-real', step: 9, title: 'Nominal vs Real', mode: 'ambient' },
-  { id: 'forever', path: '/forever', step: 10, title: 'Does Rebasing Solve GDP Forever?', mode: 'stage', year: 2026, pose: 'future' },
-  { id: 'history', path: '/history', step: 10, title: 'India’s Base-Year History', mode: 'ambient' },
-  { id: 'answer', path: '/answer', step: 10, title: 'The Final Answer', mode: 'ambient' },
+  { id: 'revisions', path: '/revisions', step: 8, title: 'Same Quarter, Updated Estimate', mode: 'ambient', year: 2026, mobileFullscreen: true },
+  { id: 'aha', path: '/aha', step: 8, title: 'Revisiting 2.6%', mode: 'ambient', mobileFullscreen: true },
+  { id: 'nominal-vs-real', path: '/nominal-vs-real', step: 9, title: 'Nominal vs Real', mode: 'ambient', mobileFullscreen: true },
+  { id: 'forever', path: '/forever', step: 10, title: 'Does Rebasing Solve GDP Forever?', mode: 'stage', year: 2026, pose: 'future', mobileFullscreen: true },
+  { id: 'history', path: '/history', step: 10, title: 'India’s Base-Year History', mode: 'ambient', mobileFullscreen: true },
+  { id: 'answer', path: '/answer', step: 10, title: 'The Final Answer', mode: 'ambient', mobileFullscreen: true },
   { id: 'faq', path: '/faq', title: 'FAQ', mode: 'hidden', utility: true },
   { id: 'sources', path: '/sources', title: 'Sources', mode: 'hidden', utility: true },
 ];

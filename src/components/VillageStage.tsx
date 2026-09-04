@@ -15,23 +15,24 @@ export function preloadVillage() {
  * WebGL contexts are never destroyed and recreated between sections. Act 1 ships and
  * paints before this chunk is even requested.
  */
-export function VillageStage() {
+export function VillageStage({ suppressed = false }: { suppressed?: boolean }) {
   const mode = useStore((s) => s.mode);
   const webgl = useStore((s) => s.webgl);
   const simpleView = useStore((s) => s.simpleView);
   const [mounted, setMounted] = useState(false);
+  const visibleMode = suppressed ? 'hidden' : mode;
 
   useEffect(() => {
-    if (mode !== 'hidden') setMounted(true);
-  }, [mode]);
+    if (visibleMode !== 'hidden') setMounted(true);
+  }, [visibleMode]);
 
   if (!webgl || simpleView) return null;
 
   return (
-    <div className="stage" data-mode={mode} aria-hidden="true">
+    <div className="stage" data-mode={visibleMode} aria-hidden="true">
       {mounted && (
         <Suspense fallback={<div className="stage-loading">Building the village…</div>}>
-          <VillageScene />
+          <VillageScene active={!suppressed} />
         </Suspense>
       )}
     </div>

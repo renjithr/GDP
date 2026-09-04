@@ -1,9 +1,9 @@
-import { useEffect, type ComponentType } from 'react';
+import { useEffect, useRef, type ComponentType } from 'react';
 import { Footer, Header } from './components/Chrome';
 import { VillageStage } from './components/VillageStage';
 import { useStore } from './state/store';
 import { routeById, type RouteId } from './state/routes';
-import { usePrefersReducedMotion } from './lib/hooks';
+import { useIsMobile, usePrefersReducedMotion } from './lib/hooks';
 import { ActClaim, ActProblem, ActSuspicion } from './story/Acts1to3';
 import { ActEstimated, ActValueAdded, ActVillage } from './story/ActsVillage';
 import { ActMistake, ActTimeline } from './story/ActsChange';
@@ -36,9 +36,15 @@ const SCREENS: Record<RouteId, ComponentType> = {
 export default function App() {
   const routeId = useStore((s) => s.routeId);
   const mode = useStore((s) => s.mode);
+  const webgl = useStore((s) => s.webgl);
+  const simpleView = useStore((s) => s.simpleView);
   const syncFromHash = useStore((s) => s.syncFromHash);
   const setReducedMotion = useStore((s) => s.setReducedMotion);
   const reduced = usePrefersReducedMotion();
+  const mobile = useIsMobile();
+  const storyShellRef = useRef<HTMLDivElement>(null);
+  const mobileFullscreen = mobile && routeById(routeId).mobileFullscreen === true;
+  const splitStage = mode !== 'hidden' && webgl && !simpleView && !mobileFullscreen;
 
   useEffect(() => setReducedMotion(reduced), [reduced, setReducedMotion]);
 
@@ -55,6 +61,11 @@ export default function App() {
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, [syncFromHash]);
+
+  // Mobile stage routes scroll inside their bottom sheet, rather than the window.
+  useEffect(() => {
+    storyShellRef.current?.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  }, [routeId]);
 
   useEffect(() => {
     const route = routeById(routeId);
@@ -73,18 +84,29 @@ export default function App() {
   const Screen = SCREENS[routeId];
 
   return (
-    <div className="app">
+    <div
+      className="app"
+      data-split-stage={splitStage ? 'true' : undefined}
+      data-mobile-fullscreen={mobileFullscreen ? 'true' : undefined}
+    >
       <a className="skip-link" href="#story">
         Skip to the story
       </a>
       <Header />
-      <VillageStage />
-      <main className="main" id="story">
-        <div className="narrative" data-mode={mode} key={routeId}>
-          <Screen />
-        </div>
-      </main>
-      <Footer />
+      <VillageStage suppressed={mobileFullscreen} />
+      <div
+        className="story-shell"
+        data-mode={mode}
+        data-split-stage={splitStage ? 'true' : undefined}
+        ref={storyShellRef}
+      >
+        <main className="main" id="story">
+          <div className="narrative" data-mode={mode} key={routeId}>
+            <Screen />
+          </div>
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
