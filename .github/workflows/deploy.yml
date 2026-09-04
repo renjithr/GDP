@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # Lets you re-deploy from the Actions tab without pushing a commit.
+  workflow_dispatch:
+
+# Required by actions/deploy-pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-flight deployment finish rather than cancelling it mid-publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        env:
+          # For a project site the base path must be "/<repository-name>/".
+          # ${{ github.event.repository.name }} keeps this correct if the repo is renamed.
+          # For a user/org site (USERNAME.github.io) or a custom domain, set this to "/".
+          BASE_PATH: /${{ github.event.repository.name }}/
+          SITE_URL: ${{ steps.pages.outputs.base_url || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
+          # Uncomment and set when using a custom domain; it writes dist/CNAME.
+          # CUSTOM_DOMAIN: example.com
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+        id: pages
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

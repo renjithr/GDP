@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101a24" />
+
+    <title>GDP Village — Why India's GDP grew 7.8%, not 2.6%</title>
+    <meta
+      name="description"
+      content="India's Q1 FY 2026-27 GDP grew 7.8% in real terms, yet ₹86.05 lakh crore to ₹88.27 lakh crore looks like 2.6%. Walk through a low-poly 3D village to see how GDP is estimated, why a base-year revision changes past estimates, and where 2.6%, 10.3% and 7.8% actually come from."
+    />
+    <link rel="canonical" href="__SITE_URL__" />
+    <meta name="author" content="GDP Village" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GDP Village" />
+    <meta property="og:title" content="GDP Village — Why India's GDP grew 7.8%, not 2.6%" />
+    <meta
+      property="og:description"
+      content="An interactive 3D explainer: ₹86.05 and ₹88.27 lakh crore belong to two different GDP series. Explore a village that changes from 2010 to 2026 to understand base-year revisions."
+    />
+    <meta property="og:url" content="__SITE_URL__" />
+    <meta property="og:image" content="__SITE_URL__og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GDP Village: a low-poly Indian village diorama with the numbers 2.6%, 10.3% and 7.8%." />
+    <meta property="og:locale" content="en_IN" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GDP Village — Why India's GDP grew 7.8%, not 2.6%" />
+    <meta
+      name="twitter:description"
+      content="₹86.05 lakh crore and ₹88.27 lakh crore are from different GDP series. An interactive 3D village explains what actually changed."
+    />
+    <meta name="twitter:image" content="__SITE_URL__og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+    />
+
+    <style>
+      /* Shell styles: keep the pre-JS view readable and on-brand. */
+      :root { color-scheme: dark; }
+      html, body { margin: 0; padding: 0; background: #0d1620; color: #e8eef5; }
+      body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif; }
+      .shell { max-width: 46rem; margin: 0 auto; padding: 4rem 1.5rem; line-height: 1.6; }
+      .shell h1 { font-family: Fraunces, Georgia, serif; font-size: clamp(2rem, 6vw, 3rem); line-height: 1.05; margin: 0 0 .5rem; }
+      .shell h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: .08em; color: #7fd4c1; margin: 2.5rem 0 .5rem; }
+      .shell p, .shell li { color: #b6c4d2; }
+      .shell a { color: #7fd4c1; }
+      .shell .lede { font-size: 1.15rem; color: #dbe6f0; }
+    </style>
+  </head>
+  <body>
+    <!--
+      This shell is real, indexable content. React replaces it on mount, but crawlers,
+      no-JS visitors and slow connections see the substance of the explainer, not an
+      empty <canvas>.
+    -->
+    <div id="root">
+      <div class="shell">
+        <h1>India grew 7.8%. So why are people calculating 2.6%?</h1>
+        <p class="lede">
+          In Q1 FY 2026&ndash;27 India's nominal GDP was &#8377;88.27 lakh crore. A year earlier the published
+          figure was &#8377;86.05 lakh crore. Divide one by the other and you get about 2.6% &mdash; not the
+          official 7.8%. The arithmetic is fine. The comparison is not.
+        </p>
+
+        <h2>The short answer</h2>
+        <ul>
+          <li>&#8377;86.05 lakh crore came from the old 2011&ndash;12 GDP series. &#8377;88.27 lakh crore comes from the new 2022&ndash;23 series. They are not the same ruler.</li>
+          <li>On the same latest series, Q1 FY 2025&ndash;26 nominal GDP is &#8377;80.00 lakh crore. &#8377;80.00 &rarr; &#8377;88.27 is <strong>10.3% nominal growth</strong>.</li>
+          <li>Removing price change, real GDP went &#8377;75.46 &rarr; &#8377;81.36 lakh crore at constant prices &mdash; <strong>7.8% real growth</strong>.</li>
+          <li>GDP is a statistical estimate assembled from surveys, administrative records and indicators. It is not a count of every transaction.</li>
+          <li>A base-year revision updates the whole measuring framework &mdash; benchmarks, sources, classifications and methods &mdash; because the economy itself changed. That legitimately changes past estimates, upward for some activities and downward for others.</li>
+          <li>None of this places statistical methodology beyond scrutiny. The real questions are about transparency, consistency and the defensibility of the sources and assumptions.</li>
+        </ul>
+
+        <h2>The interactive version</h2>
+        <p>
+          The full experience is a low-poly 3D village that grows from 2010 to 2026, so you can watch the
+          structure of an economy change and see why a measuring framework built for the old structure has
+          to be recalibrated. It needs JavaScript. A simplified, non-3D version of the same village is
+          available inside the site if WebGL is unavailable.
+        </p>
+
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://www.mospi.gov.in/themes/product/6-gross-domestic-product">MoSPI &mdash; Gross Domestic Product releases</a></li>
+          <li><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2233518&amp;reg=3&amp;lang=1">PIB &mdash; New series of GDP estimates with base year 2022&ndash;23 (27 February 2026)</a></li>
+          <li><a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2305896&amp;reg=3&amp;lang=1">PIB &mdash; Additional information on GDP estimates after the Q1 FY 2026&ndash;27 release</a></li>
+        </ul>
+      </div>
+    </div>
+    <noscript>
+      <div class="shell">
+        <p><strong>JavaScript is disabled.</strong> The summary above contains the full argument; the interactive 3D village and the calculators need JavaScript.</p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

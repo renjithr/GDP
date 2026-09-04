@@ -1,0 +1,17 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+.DS_Store
+.vite/
+*.tsbuildinfo
+coverage/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Mood-board / reference art used only while designing the village.
+# Not needed to build or run the site; kept out of the repo to avoid large binaries.
+reference/

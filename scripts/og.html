@@ -1,0 +1,77 @@
+<!doctype html>
+<!--
+  Source for public/og-image.png. Rendered to PNG by scripts/make-images.sh so social
+  cards get a raster image (many platforms will not render an SVG card).
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        width: 1200px; height: 630px; overflow: hidden;
+        background: radial-gradient(120% 90% at 20% 0%, #17242f 0%, #0d1620 55%, #0a121a 100%);
+        color: #e9eff5; font-family: Inter, sans-serif;
+        display: grid; grid-template-columns: 1fr 420px;
+      }
+      .left { padding: 66px 0 66px 72px; display: flex; flex-direction: column; justify-content: center; }
+      .brand { font-size: 20px; letter-spacing: .18em; text-transform: uppercase; color: #6fd3bb; font-weight: 700; }
+      h1 { font-family: Fraunces, Georgia, serif; font-size: 74px; line-height: .98; letter-spacing: -.02em; margin: 20px 0 8px; }
+      h1 em { font-style: normal; color: #f0b64a; }
+      p { font-size: 23px; line-height: 1.45; color: #aabbc9; max-width: 640px; margin-top: 16px; }
+      .nums { display: flex; gap: 14px; margin-top: 36px; }
+      .n { border: 1px solid rgba(255,255,255,.14); border-radius: 14px; padding: 14px 20px; background: rgba(255,255,255,.04); }
+      .n b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 38px; letter-spacing: -.03em; line-height: 1; }
+      .n span { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: #7d90a1; }
+      .clay b { color: #e2794a; } .amber b { color: #f0b64a; } .teal b { color: #6fd3bb; }
+
+      /* A hint of the diorama, in pure CSS — no screenshot dependency. */
+      .right { position: relative; }
+      .plate {
+        position: absolute; top: 205px; left: -40px; width: 430px; height: 430px;
+        transform: rotateX(58deg) rotateZ(-38deg); transform-style: preserve-3d;
+        background: #93b25e; border-radius: 34px; box-shadow: 0 34px 0 #6b5334, 0 60px 90px rgba(0,0,0,.55);
+      }
+      .road { position: absolute; background: #c8a06a; }
+      .r1 { left: 0; right: 0; top: 47%; height: 34px; }
+      .r2 { top: 0; bottom: 0; left: 56%; width: 28px; }
+      .field { position: absolute; background: #5d9433; border: 3px solid #ad875a; border-radius: 4px; }
+      .b { position: absolute; border-radius: 3px; }
+      .roof { background: #b4552f; }
+      .shed { background: #b3bec4; }
+    </style>
+  </head>
+  <body>
+    <div class="left">
+      <div class="brand">GDP Village</div>
+      <h1>India grew 7.8%.<br />So why do people<br />get <em>2.6%</em>?</h1>
+      <p>An interactive 3D explainer: two GDP series, one quarter, and what a base-year revision actually changes.</p>
+      <div class="nums">
+        <div class="n clay"><b>2.6%</b><span>Different series</span></div>
+        <div class="n amber"><b>10.3%</b><span>Nominal</span></div>
+        <div class="n teal"><b>7.8%</b><span>Real</span></div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="plate">
+        <div class="road r1"></div>
+        <div class="road r2"></div>
+        <div class="field" style="left:18px;top:20px;width:150px;height:110px"></div>
+        <div class="field" style="left:18px;top:140px;width:150px;height:120px"></div>
+        <div class="b roof" style="left:200px;top:36px;width:64px;height:44px"></div>
+        <div class="b roof" style="left:280px;top:30px;width:64px;height:44px"></div>
+        <div class="b roof" style="left:196px;top:110px;width:150px;height:34px"></div>
+        <div class="b shed" style="left:262px;top:250px;width:130px;height:86px"></div>
+        <div class="b shed" style="left:196px;top:300px;width:96px;height:70px"></div>
+        <div class="b roof" style="left:40px;top:300px;width:60px;height:42px"></div>
+        <div class="b roof" style="left:118px;top:320px;width:60px;height:42px"></div>
+        <div class="b roof" style="left:44px;top:372px;width:60px;height:42px"></div>
+      </div>
+    </div>
+  </body>
+</html>
