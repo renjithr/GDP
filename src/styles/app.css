@@ -854,6 +854,16 @@ details.deep-dive > summary + * { margin-top: 0.9rem; }
 }
 .footer a { color: var(--text-dim); }
 
+.visitor-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.visitor-count > [aria-hidden] { color: var(--teal); font-size: 0.7rem; }
+.visitor-count .mono { color: var(--text); }
+
 .quality-toggle {
   margin-left: auto;
   display: flex;

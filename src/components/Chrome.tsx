@@ -1,6 +1,40 @@
+import { useEffect, useState } from 'react';
 import { useStore } from '../state/store';
 import { hashFor, neighbours, routeById, steps } from '../state/routes';
 import { preloadVillage } from './VillageStage';
+
+const VISITOR_COUNT_URL = 'https://indiangdp.goatcounter.com/counter/TOTAL.json';
+
+function VisitorCount() {
+  const [count, setCount] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch(VISITOR_COUNT_URL, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error(`Visitor count request failed: ${response.status}`);
+        return response.json() as Promise<{ count?: unknown }>;
+      })
+      .then((data) => {
+        if (typeof data.count === 'string' && /^\d[\d,]*$/.test(data.count)) setCount(data.count);
+      })
+      .catch(() => {
+        // Tracking should never make the footer noisy when the counter is blocked or disabled.
+      });
+
+    return () => controller.abort();
+  }, []);
+
+  if (!count) return null;
+
+  return (
+    <span className="visitor-count" aria-label={`${count} total visitors`}>
+      <span aria-hidden="true">◉</span>
+      <span className="mono">{count}</span> visitors
+    </span>
+  );
+}
 
 export function Header() {
   const routeId = useStore((s) => s.routeId);
@@ -88,6 +122,7 @@ export function Footer() {
         Village numbers are illustrative. India figures are official and cited on the{' '}
         <a href="#/sources">Sources</a> page.
       </span>
+      <VisitorCount />
       <a href="#/faq">FAQ</a>
       {webgl && (
         <label className="quality-toggle">
